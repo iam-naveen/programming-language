@@ -1,43 +1,4 @@
-export const TokenTypes = {
-  Illegal: "ILLEGAL",
-  EOF: "EOF",
-  Ident: "IDENT",
-  Number: "NUMBER",
-  Assign: "=",
-  Plus: "+",
-  Comma: ",",
-  Semi: ";",
-  LParen: "(",
-  RParen: ")",
-  LBrace: "{",
-  RBrace: "}",
-  Function: "FUNCTION",
-  Var: "VAR",
-  True: "TRUE",
-  False: "FALSE",
-  If: "IF",
-  Else: "ELSE",
-} as const;
-
-type TokenType = (typeof TokenTypes)[keyof typeof TokenTypes];
-
-export type Token = {
-  type: TokenType;
-  literal: string | number;
-};
-
-function createToken(type: TokenType, literal: string | number): Token {
-  return { type, literal } satisfies Token;
-}
-
-const Keywords = {
-  func: createToken(TokenTypes.Function, "func"),
-  var: createToken(TokenTypes.Var, "var"),
-  true: createToken(TokenTypes.True, "true"),
-  false: createToken(TokenTypes.False, "false"),
-  if: createToken(TokenTypes.If, "if"),
-  else: createToken(TokenTypes.Else, "else"),
-} as const;
+import { Token, TokenTypes, createToken, Keywords } from "./token.ts";
 
 export class Lexer {
   private index = 0;
@@ -50,7 +11,10 @@ export class Lexer {
   }
 
   public nextToken(): Token {
-    this.skipWhiteSpaces();
+
+    this.skipWhiteSpaces(); // whitespaces not considered
+
+    // create a token based on the current character
     let tok: Token;
     switch (this.ch) {
       case "=":
@@ -80,17 +44,24 @@ export class Lexer {
       case "\0":
         tok = createToken(TokenTypes.EOF, "");
         break;
+
       default:
+        // tokens that can be more than one character
         if (isLetter(this.ch)) {
           const ident = this.readIdentifier();
           const keyword = Keywords[ident as keyof typeof Keywords] || undefined;
+          // identifier token or keyword token
           tok = keyword || createToken(TokenTypes.Ident, ident);
           return tok;
-        } else if (isDigit(this.ch)) {
+        } 
+        // number token with literal values
+        else if (isDigit(this.ch)) {
           tok = createToken(TokenTypes.Number, 0);
           tok.literal = this.readNumber();
           return tok;
-        } else {
+        }
+        // Invalid token
+        else {
           tok = createToken(TokenTypes.Illegal, this.ch);
         }
     }
@@ -98,6 +69,7 @@ export class Lexer {
     return tok;
   }
 
+  // reads the Number literal and returns it as a number
   private readNumber(): number {
     const position = this.position;
     while (isDigit(this.ch)) {
