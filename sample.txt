@@ -1,0 +1,42 @@
+====================== Variables ==========================
+
+    var name = "Naveen";
+    var age = 20;
+
+================== Conditional Statements =================
+
+    if age > 18 {
+      print( "You are eligible to vote" );
+    } else {
+      print( "You are not eligible to vote" );
+    }
+
+======================= Function ==========================
+
+    func name() {
+      var a = 10;
+      var b = 20;
+      var c = a + b;
+      return c;
+    }
+
+======================== Loops ============================
+
+    for i in 1..10 {
+      print i;
+    }
+
+    while true {
+      print( "Hello World" );
+    }
+
+======================== Object ===========================
+
+    var person = {
+      name: "Naveen",
+      age: 20,
+    };
+
+======================== Array ============================
+
+    var colors = ["red", "blue", "green"];

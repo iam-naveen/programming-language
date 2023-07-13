@@ -12,6 +12,7 @@ export const TokenTypes = {
   LBrace: "{",
   RBrace: "}",
   Function: "FUNCTION",
+  Return: "RETURN",
   Var: "VAR",
   True: "TRUE",
   False: "FALSE",
@@ -19,7 +20,7 @@ export const TokenTypes = {
   Else: "ELSE",
 } as const;
 
-type TokenType = (typeof TokenTypes)[keyof typeof TokenTypes];
+export type TokenType = (typeof TokenTypes)[keyof typeof TokenTypes];
 
 export type Token = {
   type: TokenType;

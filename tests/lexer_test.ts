@@ -1,14 +1,20 @@
 import { assertEquals } from "https://deno.land/std@0.190.0/testing/asserts.ts";
-import { TokenTypes, Lexer } from "./lexer.ts";
+import { Lexer } from "../lexer.ts";
+import { TokenTypes } from "../lib/token.ts";
+
+// UNIT TEST FOR LEXER
 
 function tester() {
+  
   const input = `
+
   var five = 5;
   var ten = 10;
   var add = func(x, y) {
        x + y;
   };
   var result = add(five, ten);
+
 `;
 
   const expected_results = [

@@ -1,4 +1,4 @@
-import { Token, TokenTypes, createToken, Keywords } from "./token.ts";
+import { Token, TokenTypes, createToken, Keywords } from "./lib/token.ts";
 
 export class Lexer {
   private index = 0;
