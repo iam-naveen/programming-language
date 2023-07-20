@@ -38,4 +38,5 @@ export const Keywords = {
   false: createToken(TokenTypes.False, "false"),
   if: createToken(TokenTypes.If, "if"),
   else: createToken(TokenTypes.Else, "else"),
+  return: createToken(TokenTypes.Return, "return"),
 } as const;

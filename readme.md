@@ -1,49 +1,56 @@
-
-<center><h3> Varibles </h3></center>
-
-```javascript
-
-    var name = "Naveen";
-    var age = 21;
+### Variables
 
 ```
-
-<center><h3> Conditional Statements </h3></center>
-
-```swift
-
-    if age > 18 {
-      print( "You are eligible to vote" );
-    } else {
-      print( "You are not eligible to vote" );
-    }
-
+intha a = 1;
+intha name = "Naveen";
 ```
 
-<center><h3> Functions </h3></center>
-
-```go
-    func name() {
-      var a = 10;
-      var b = 20;
-      var c = a + b;
-      return c;
-    }
-```
-
-<center><h3> Loops </h3></center>
-
-```python
-
-    for i in 1..10 {
-      print( i );
-    }
+### do-while loop
 
 ```
-```swift
+intha a = 1;
+intha b = 2;
 
-    while true {
-      print( "Hello World" );
-    }
+sei{
 
+  a = a + b;
+  a sollu;
+
+} a < b varai;
+```
+
+### while loop
+
+```
+a < b varai sei{
+
+  "vanakkam" sollu;
+
+}
+```
+
+### if else
+
+```
+a == b irundhaal sei{
+
+    "vanakkam" sollu;
+
+} ilaina a < b irundhaal sei{
+
+    "vanakkam" sollu;
+
+} illana sei{
+
+    "error" sollu;
+}
+```
+
+### Function
+
+```
+seiyal add(intha a, intha b){
+    intha c = a + b;
+    c;
+}
 ```

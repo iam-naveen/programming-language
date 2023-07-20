@@ -1,14 +1,20 @@
-import { Program, VarStatement, Identifier, Statement } from "./lib/ast.ts";
 import { Token, TokenType, TokenTypes } from "./lib/token.ts";
 import { Lexer } from "./lexer.ts";
+import {
+  Program,
+  Statement,
+  Identifier,
+  VarStatement,
+  ReturnStatement,
+  // IfStatement,
+} from "./lib/ast.ts";
 
 export class Parser {
-
   lexer: Lexer;
 
   currentToken!: Token;
   nextToken!: Token;
-  
+
   errors: string[] = [];
 
   constructor(lexer: Lexer) {
@@ -62,8 +68,7 @@ export class Parser {
 
     if (!this.ifNextIs(TokenTypes.Ident)) return null;
 
-    varStatement.refers = new Identifier(this.currentToken);
-    varStatement.value = undefined;
+    varStatement.refers = this.parseIdentifier();
 
     if (!this.ifNextIs(TokenTypes.Assign)) return null;
 
@@ -74,10 +79,19 @@ export class Parser {
   }
 
   parseReturnStatement(): Statement | null {
-    return null;
+    const returnStatement = new ReturnStatement(this.currentToken);
+    returnStatement.returnValue = undefined;
+
+    while (this.currentToken.type != TokenTypes.Semi) {
+      this.advanceToken();
+    }
+
+    return returnStatement;
   }
-  parseIfStatement(): Statement | null {
-    return null;
+
+  parseIdentifier() {
+    const identifier = new Identifier(this.currentToken);
+    return identifier;
   }
 
   private ifNextIs(tokenType: TokenType) {

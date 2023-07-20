@@ -5,15 +5,18 @@ import { Token } from "./token.ts";
 // - Statement
 // - Expression
 
-type Node = {
+interface Node {
   tokenLiteral(): string;
-};
-
-export interface Statement extends Node {
-  statementNode(): void;
+  toString(): string;
 }
 
-export interface Expression extends Node {
+export abstract class Statement implements Node {
+  abstract statementNode(): void;
+  abstract tokenLiteral(): string;
+  abstract toString(): string;
+}
+
+export abstract class Expression implements Node {
   expressionNode(): void;
 }
 
@@ -23,7 +26,7 @@ export interface Expression extends Node {
 
 // Root Node of the AST
 
-export class Program {
+export class Program implements Node {
   statements: Statement[] = [];
 
   tokenLiteral(): string {
@@ -41,7 +44,7 @@ export class Program {
 // + tokenLiteral(): string
 // + expressionNode(): void
 
-export class Identifier implements Expression {
+export class Identifier implements Expression, Node {
   token: Token;
   value!: string;
 
@@ -63,12 +66,16 @@ export class Identifier implements Expression {
 // + tokenLiteral(): string
 // + statementNode(): void
 
-export class VarStatement implements Statement {
+export class VarStatement extends Statement {
+  toString(): string {
+    throw new Error("Method not implemented.");
+  }
   token: Token;
   refers!: Identifier;
-  value!: Expression | undefined;
+  value: Expression | undefined;
 
   constructor(token: Token) {
+    super();
     this.token = token;
   }
 
@@ -79,3 +86,110 @@ export class VarStatement implements Statement {
   statementNode(): void {}
 }
 
+// ReturnStatement class
+// - token: Token
+// - returnValue: Expression | undefined
+// + tokenLiteral(): string
+// + statementNode(): void
+
+export class ReturnStatement extends Statement {
+  token: Token;
+  returnValue: Expression | undefined;
+
+  constructor(token: Token) {
+    super();
+    this.token = token;
+  }
+
+  tokenLiteral(): string {
+    return this.token.literal as string;
+  }
+
+  toString(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  statementNode(): void {}
+}
+
+// IfStatement class
+// - token: Token
+// - condition: Expression | undefined
+// - consequence: BlockStatement | undefined
+// - alternative: BlockStatement | undefined
+// + tokenLiteral(): string
+// + statementNode(): void
+
+export class IfStatement extends Statement {
+  token: Token;
+  condition: Expression | undefined;
+  consequence: BlockStatement | undefined;
+  alternative: BlockStatement | undefined;
+
+  constructor(token: Token) {
+    super();
+    this.token = token;
+  }
+
+  tokenLiteral(): string {
+    return this.token.literal as string;
+  }
+
+  toString(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  statementNode(): void {}
+}
+
+// BlockStatement class
+// - token: Token
+// - statements: Statement[]
+// + tokenLiteral(): string
+// + statementNode(): void
+
+export class BlockStatement extends Statement {
+  token: Token;
+  statements: Statement[] = [];
+
+  constructor(token: Token) {
+    super();
+    this.token = token;
+  }
+
+  tokenLiteral(): string {
+    return this.token.literal as string;
+  }
+
+  toString(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  statementNode(): void {}
+}
+
+// ExpressionStatement class
+// - token: Token
+// - expression: Expression | undefined
+// + tokenLiteral(): string
+// + statementNode(): void
+
+export class ExpressionStatement extends Statement {
+  token: Token;
+  expression: Expression | undefined;
+
+  constructor(token: Token) {
+    super();
+    this.token = token;
+  }
+
+  tokenLiteral(): string {
+    return this.token.literal as string;
+  }
+
+  toString(): string {
+    throw new Error("Method not implemented.");
+  }
+
+  statementNode(): void {}
+}
