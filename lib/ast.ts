@@ -17,7 +17,9 @@ export abstract class Statement implements Node {
 }
 
 export abstract class Expression implements Node {
-  expressionNode(): void;
+  abstract expressionNode(): void;
+  abstract tokenLiteral(): string;
+  abstract toString(): string;
 }
 
 // Program class
@@ -35,6 +37,14 @@ export class Program implements Node {
     }
     return "";
   }
+
+  toString(): string {
+    let output = "";
+    this.statements.forEach((statement) => {
+      output += statement.toString();
+    });
+    return output;
+  }
 }
 
 // Identifier class
@@ -44,36 +54,38 @@ export class Program implements Node {
 // + tokenLiteral(): string
 // + expressionNode(): void
 
-export class Identifier implements Expression, Node {
+export class Identifier extends Expression {
   token: Token;
   value!: string;
-
+  
   constructor(token: Token) {
+    super();
     this.token = token;
   }
-
+  
   tokenLiteral(): string {
     return this.token.literal as string;
+  }
+  
+  toString(): string {
+      throw new Error("Method not implemented.");
   }
 
   expressionNode(): void {}
 }
 
-// VarStatement class
+// LetStatement class
 // - token: Token
 // - name: Identifier
 // - value: Expression | undefined
 // + tokenLiteral(): string
 // + statementNode(): void
 
-export class VarStatement extends Statement {
-  toString(): string {
-    throw new Error("Method not implemented.");
-  }
+export class LetStatement extends Statement {
   token: Token;
   refers!: Identifier;
   value: Expression | undefined;
-
+  
   constructor(token: Token) {
     super();
     this.token = token;
@@ -81,6 +93,10 @@ export class VarStatement extends Statement {
 
   tokenLiteral(): string {
     return this.token.literal as string;
+  }
+  
+  toString(): string {
+    throw new Error("Method not implemented.");
   }
 
   statementNode(): void {}

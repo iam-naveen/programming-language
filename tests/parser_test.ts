@@ -1,7 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.190.0/testing/asserts.ts";
 import { Lexer } from "../lexer.ts";
 import { Parser } from "../parser.ts";
-import { ReturnStatement, VarStatement } from "../lib/ast.ts";
+import { ReturnStatement, LetStatement } from "../lib/ast.ts";
 import { TokenTypes } from "../lib/token.ts";
 
 // UNIT TEST FOR PARSER
@@ -9,9 +9,9 @@ import { TokenTypes } from "../lib/token.ts";
 function tester() {
   const input = `
 
-  var x = 5;
-  var y = 10*5;
-  var num = 838383;
+  indha x = 5;
+  indha y = 10*5;
+  indha num = 838383;
 
   return 1;
   `;
@@ -31,7 +31,7 @@ function tester() {
   }
   console.log(program.statements);
   expectedIdentifiers.forEach((expectedIdentifier, i) => {
-    const statement = program.statements[i] as VarStatement;
+    const statement = program.statements[i] as LetStatement;
     assertEquals(statement.refers.tokenLiteral(), expectedIdentifier);
   });
   const statement = program.statements[3] as ReturnStatement;

@@ -4,7 +4,7 @@ import {
   Program,
   Statement,
   Identifier,
-  VarStatement,
+  LetStatement,
   ReturnStatement,
   // IfStatement,
 } from "./lib/ast.ts";
@@ -55,7 +55,7 @@ export class Parser {
   parseStatement(): Statement | null {
     switch (this.currentToken.type) {
       case TokenTypes.Var:
-        return this.parseVarStatement();
+        return this.parseLetStatement();
       case TokenTypes.Return:
         return this.parseReturnStatement();
       default:
@@ -63,19 +63,19 @@ export class Parser {
     }
   }
 
-  parseVarStatement(): Statement | null {
-    const varStatement = new VarStatement(this.currentToken);
+  parseLetStatement(): Statement | null {
+    const letStatement = new LetStatement(this.currentToken);
 
     if (!this.ifNextIs(TokenTypes.Ident)) return null;
 
-    varStatement.refers = this.parseIdentifier();
+    letStatement.refers = this.parseIdentifier();
 
     if (!this.ifNextIs(TokenTypes.Assign)) return null;
 
     while (this.currentToken.type != TokenTypes.Semi) {
       this.advanceToken();
     }
-    return varStatement;
+    return letStatement;
   }
 
   parseReturnStatement(): Statement | null {

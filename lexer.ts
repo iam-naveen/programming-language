@@ -11,14 +11,50 @@ export class Lexer {
   }
 
   public nextToken(): Token {
-
     this.skipWhiteSpaces(); // whitespaces not considered
 
     // create a token based on the current character
     let tok: Token;
     switch (this.ch) {
       case "=":
-        tok = createToken(TokenTypes.Assign, this.ch);
+        if (this.peekChar() === "=") {
+          let literal = this.ch;
+          this.readChar();
+          literal += this.ch;
+          tok = createToken(TokenTypes.Eq, literal);
+        } else {
+          tok = createToken(TokenTypes.Assign, this.ch);
+        }
+        break;
+      case "!":
+        if (this.peekChar() === "=") {
+          let literal = this.ch;
+          this.readChar();
+          literal += this.ch;
+          tok = createToken(TokenTypes.NotEq, literal);
+        } else {
+          tok = createToken(TokenTypes.Bang, this.ch);
+        }
+        break;
+      case "<":
+        if (this.peekChar() === "=") {
+          let literal = this.ch;
+          this.readChar();
+          literal += this.ch;
+          tok = createToken(TokenTypes.LessThanEq, literal);
+        } else {
+          tok = createToken(TokenTypes.LessThan, this.ch);
+        }
+        break;
+      case ">":
+        if (this.peekChar() === "=") {
+          let literal = this.ch;
+          this.readChar();
+          literal += this.ch;
+          tok = createToken(TokenTypes.GreaterThanEq, literal);
+        } else {
+          tok = createToken(TokenTypes.GreaterThan, this.ch);
+        }
         break;
       case ";":
         tok = createToken(TokenTypes.Semi, this.ch);
@@ -53,7 +89,7 @@ export class Lexer {
           // identifier token or keyword token
           tok = keyword || createToken(TokenTypes.Ident, ident);
           return tok;
-        } 
+        }
         // number token with literal values
         else if (isDigit(this.ch)) {
           tok = createToken(TokenTypes.Number, 0);
@@ -94,6 +130,14 @@ export class Lexer {
     }
     this.position = this.readPosition;
     this.readPosition += 1;
+  }
+
+  private peekChar(): string {
+    if (this.readPosition >= this.input.length) {
+      return "\0";
+    } else {
+      return this.input[this.readPosition];
+    }
   }
 
   private skipWhiteSpaces(): void {

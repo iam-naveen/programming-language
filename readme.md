@@ -1,15 +1,15 @@
 ### Variables
 
 ```
-intha a = 1;
-intha name = "Naveen";
+indha a = 1;
+indha name = "Naveen";
 ```
 
 ### do-while loop
 
 ```
-intha a = 1;
-intha b = 2;
+indha a = 1;
+indha b = 2;
 
 sei{
 
@@ -19,10 +19,19 @@ sei{
 } a < b varai;
 ```
 
-### while loop
+### Until loop
 
 ```
 a < b varai sei{
+
+  "vanakkam" sollu;
+
+}
+```
+
+### While loop
+```
+a < b bodhu sei{
 
   "vanakkam" sollu;
 
@@ -36,7 +45,7 @@ a == b irundhaal sei{
 
     "vanakkam" sollu;
 
-} ilaina a < b irundhaal sei{
+} illana a < b irundhaal sei{
 
     "vanakkam" sollu;
 
@@ -49,8 +58,8 @@ a == b irundhaal sei{
 ### Function
 
 ```
-seiyal add(intha a, intha b){
-    intha c = a + b;
+seiyal add(a, b){
+    indha c = a + b;
     c;
 }
 ```
